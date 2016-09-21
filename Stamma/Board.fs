@@ -29,8 +29,7 @@ let private ofFenRank fenR =
             if System.Char.IsLetter fenR.[idx] then 
                 arr.[count] <- Piece.ofChar fenR.[idx]
                 count <- count + 1
-            else 
-                count <- count + (int fenR.[idx] - 48)
+            else count <- count + (int fenR.[idx] - 48)
             idx <- idx + 1
         arr
 

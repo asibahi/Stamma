@@ -56,4 +56,5 @@ let internal vectors =
           (1, 2)
           (2, -1)
           (2, 1) ]
-    | _ -> [] (* unused *)
+    | _ -> []
+(* unused *)

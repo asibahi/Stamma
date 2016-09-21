@@ -48,5 +48,5 @@ type Position =
       KingWhite : Coordinates
       KingBlack : Coordinates
       CappedWhite : Piece list
-      CappedBlack : Piece list 
-      ReversibleCount : int}
+      CappedBlack : Piece list
+      ReversibleCount : int }
