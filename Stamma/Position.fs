@@ -219,3 +219,18 @@ let wayfindLegalPositions pos =
 
 let isCheckmate pos = isCheck pos && (wayfindLegalPositions pos |> List.length) = 0
 let isStalemate pos = not (isCheck pos) && (wayfindLegalPositions pos |> List.length) = 0
+
+let toFen pos = 
+    let boardFen = pos.Board |> Board.toFen
+    
+    let turn = 
+        if pos.Turn = White then "w"
+        else "b"
+    
+    let epSq = 
+        if pos.EnPassant = { Rank = 0
+                             File = 0 }
+        then ""
+        else Square.toAlg pos.EnPassant
+    
+    sprintf "%s %s %s %d" boardFen turn epSq pos.ReversibleCount
