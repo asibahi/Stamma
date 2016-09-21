@@ -2,23 +2,41 @@
 [<RequireQualifiedAccess>]
 module Stamma.Board
 
+(*
 let private ofFenRank fenR = 
-    let mutable baseArray = Array.create 10 Empty
-    if fenR = "10" then baseArray
+    let arr = Array.create 10 Empty
+    if fenR = "10" then arr
     else 
-        let rec loop (rnk : string) count = 
+        let rec loop idx count = 
             if count = 10 then ()
-            elif System.Char.IsLetter rnk.[0] then 
-                baseArray.[count] <- Piece.ofChar rnk.[0]
-                loop (rnk.Substring 1) (count + 1)
+            elif System.Char.IsLetter fenR.[idx] then 
+                arr.[count] <- Piece.ofChar fenR.[idx]
+                loop (idx + 1) (count + 1)
             else 
-                let dgt = int rnk.[0] - 48
-                loop (rnk.Substring 1) (count + dgt)
-        loop fenR 0
-        baseArray
+                let dgt = int fenR.[idx] - 48
+                loop (idx + 1) (count + dgt)
+        loop 0 0
+        arr
+*)
+
+let private ofFenRank fenR = 
+    let arr = Array.create 10 Empty
+    if fenR = "10" then arr
+    else 
+        let mutable idx = 0
+        let mutable count = 0
+        while count < 10 do
+            if System.Char.IsLetter fenR.[idx] then 
+                arr.[count] <- Piece.ofChar fenR.[idx]
+                count <- count + 1
+            else 
+                count <- count + (int fenR.[idx] - 48)
+            idx <- idx + 1
+        arr
 
 let ofFen (fen : string) = 
-    fen.Split '/'
+    let arr = fen.Split '/'
+    arr
     |> Array.rev
     |> Array.map ofFenRank
     |> Array.collect id
@@ -48,8 +66,7 @@ let toFen board =
     sb.ToString()
 
 let empty = ofFen "10/10/10/10/10/10/10/10/10/10"
-let start = 
-    ofFen "r8r/1nbqkmcbn1/pppppppppp/10/10/10/10/PPPPPPPPPP/1NBQKMCBN1/R8R"
+let start = ofFen "r8r/1nbqkmcbn1/pppppppppp/10/10/10/10/PPPPPPPPPP/1NBQKMCBN1/R8R"
 
 let toAscii board = 
     seq { 
