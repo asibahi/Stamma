@@ -43,6 +43,7 @@
     <Compile Include="AssemblyInfo.fs" />
     <Compile Include="Types.fs" />
     <Compile Include="Piece.fs" />
+    <Compile Include="Square.fs" />
     <Compile Include="Board.fs" />
     <Compile Include="Position.fs" />
     <Compile Include="Game.fs" />
