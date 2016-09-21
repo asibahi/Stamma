@@ -221,16 +221,66 @@ let isCheckmate pos = isCheck pos && (wayfindLegalPositions pos |> List.length) 
 let isStalemate pos = not (isCheck pos) && (wayfindLegalPositions pos |> List.length) = 0
 
 let toFen pos = 
-    let boardFen = pos.Board |> Board.toFen
+    let boardFen = Board.toFen pos.Board
     
     let turn = 
-        if pos.Turn = White then "w"
-        else "b"
+        match pos.Turn with
+        | White -> "w"
+        | Black -> "b"
     
     let epSq = 
-        if pos.EnPassant = { Rank = 0
-                             File = 0 }
-        then ""
-        else Square.toAlg pos.EnPassant
+        match pos.EnPassant with
+        | { Rank = 0; File = 0 } -> "-"
+        | _ -> Square.toAlg pos.EnPassant
     
     sprintf "%s %s %s %d" boardFen turn epSq pos.ReversibleCount
+
+let ofFen (fen : string) = 
+    let e = fen.Split ' '
+    let board = Board.ofFen e.[0]
+    
+    let capped pList = 
+        let mutable pieces = []
+        if List.contains (Queen, 1) pList |> not then pieces <- Queen :: pieces
+        if List.contains (Marshal, 1) pList |> not then pieces <- Marshal :: pieces
+        if List.contains (Cardinal, 1) pList |> not then pieces <- Cardinal :: pieces
+        if List.contains (Knight, 2) pList |> not then pieces <- Knight :: pieces
+        if List.contains (Knight, 1) pList |> not then pieces <- Knight :: pieces
+        if List.contains (Bishop, 2) pList |> not then pieces <- Bishop :: pieces
+        if List.contains (Bishop, 1) pList |> not then pieces <- Bishop :: pieces
+        if List.contains (Rook, 2) pList |> not then pieces <- Rook :: pieces
+        if List.contains (Rook, 1) pList |> not then pieces <- Rook :: pieces
+        pieces
+    
+    let wp = 
+        board
+        |> Map.toList
+        |> List.choose (fun (_, f) -> 
+               match f with
+               | Piece(p, White) when p <> Pawn -> Some p
+               | _ -> None)
+        |> List.countBy id
+    
+    let bp = 
+        board
+        |> Map.toList
+        |> List.choose (fun (_, f) -> 
+               match f with
+               | Piece(p, Black) when p <> Pawn -> Some p
+               | _ -> None)
+        |> List.countBy id
+    
+    { Board = board
+      EnPassant = 
+          if e.[2] = "-" then 
+              { Rank = 0
+                File = 0 }
+          else Square.ofAlg e.[2]
+      Turn = 
+          if e.[1] = "w" then White
+          else Black
+      KingWhite = Map.findKey (fun sq p -> p = Piece(King, White)) board
+      KingBlack = Map.findKey (fun sq p -> p = Piece(King, Black)) board
+      CappedWhite = capped wp
+      CappedBlack = capped bp
+      ReversibleCount = int e.[3] }
