@@ -46,7 +46,6 @@
     <Compile Include="Board.fs" />
     <Compile Include="Position.fs" />
     <Compile Include="Game.fs" />
-    <None Include="Script.fsx" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FSharp.Core">
