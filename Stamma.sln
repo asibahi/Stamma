@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Stamma", "StammaLib\Stamma.fsproj", "{4B414AD6-FFFD-4666-90E4-4346A22E0268}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "StammaTests", "StammaTests\StammaTests.fsproj", "{7285D402-0228-475D-9684-FE0E7E6898A3}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Stamma", "Stamma\Stamma.fsproj", "{66F0A233-B3CE-42D5-8E79-BB10C7C59A81}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +13,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{4B414AD6-FFFD-4666-90E4-4346A22E0268}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4B414AD6-FFFD-4666-90E4-4346A22E0268}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4B414AD6-FFFD-4666-90E4-4346A22E0268}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4B414AD6-FFFD-4666-90E4-4346A22E0268}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7285D402-0228-475D-9684-FE0E7E6898A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7285D402-0228-475D-9684-FE0E7E6898A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7285D402-0228-475D-9684-FE0E7E6898A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7285D402-0228-475D-9684-FE0E7E6898A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66F0A233-B3CE-42D5-8E79-BB10C7C59A81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66F0A233-B3CE-42D5-8E79-BB10C7C59A81}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66F0A233-B3CE-42D5-8E79-BB10C7C59A81}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66F0A233-B3CE-42D5-8E79-BB10C7C59A81}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
