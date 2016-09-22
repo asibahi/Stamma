@@ -5,21 +5,17 @@ open NUnit.Framework
 open FsUnitTyped
 
 [<Test>]
-let ``ofFen position - should be true`` () =
-    let pos =
-        "r8r/1nbqkmcbn1/pppppppppp/10/10/10/10/PPPPPPPPPP/1NBQKMCBN1/R8R w - 0"
-        |> Position.ofFen 
-
-    pos.KingWhite |> Square.toAlg |> shouldEqual "e2"
-    pos.KingBlack |> Square.toAlg |> shouldEqual "e9"
+let ``ofFen position - should be true``() = 
+    let pos = Position.ofFen "r8r/1nbqkmcbn1/pppppppppp/10/10/10/10/PPPPPPPPPP/1NBQKMCBN1/R8R w - 0"
+    Square.toAlg pos.KingWhite |> shouldEqual "e2"
+    Square.toAlg pos.KingBlack |> shouldEqual "e9"
     pos.CappedWhite |> shouldBeEmpty
     pos.CappedBlack |> shouldBeEmpty
-    pos.EnPassant |> shouldEqual {Rank = 0; File = 0}
+    pos.EnPassant |> shouldEqual { Rank = 0
+                                   File = 0 }
     pos.ReversibleCount |> shouldEqual 0
-    pos.Turn |> shouldEqual White 
+    pos.Turn |> shouldEqual White
     pos.Board |> shouldEqual Board.start
-
-
 
 [<Test>]
 let ``isCheckmate position - should be true``() = 
