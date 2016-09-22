@@ -105,7 +105,7 @@ open FsUnitTyped
 [<TestCase(10, 8, "j8")>]
 [<TestCase(10, 9, "j9")>]
 [<TestCase(10, 10, "j10")>]
-let ``toAlg Test`` (rank, file, expected) = 
+let ``toAlg Test`` (file, rank, expected) = 
     Square.toAlg { Rank = rank
                    File = file }
     |> shouldEqual expected
@@ -210,6 +210,6 @@ let ``toAlg Test`` (rank, file, expected) =
 [<TestCase(10, 8, "j8")>]
 [<TestCase(10, 9, "j9")>]
 [<TestCase(10, 10, "j10")>]
-let ``ofAlg Test`` (rank, file, str) = 
+let ``ofAlg Test`` (file, rank, str) = 
     Square.ofAlg str |> shouldEqual { Rank = rank
                                       File = file }
