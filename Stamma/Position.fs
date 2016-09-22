@@ -239,37 +239,24 @@ let ofFen (fen : string) =
     let e = fen.Split ' '
     let board = Board.ofFen e.[0]
     
-    let capped pList = 
+    let capped color = 
+        let pList = 
+            board
+            |> Map.toList
+            |> List.choose (fun (_, f) -> 
+                   match f with
+                   | Piece(p, c) when p <> Pawn && c = color -> Some p
+                   | _ -> None)
+            |> List.countBy id
+        
         let mutable pieces = []
-        if List.contains (Queen, 1) pList |> not then pieces <- Queen :: pieces
-        if List.contains (Marshal, 1) pList |> not then pieces <- Marshal :: pieces
-        if List.contains (Cardinal, 1) pList |> not then pieces <- Cardinal :: pieces
-        if List.contains (Knight, 2) pList |> not then pieces <- Knight :: pieces
-        if List.contains (Knight, 1) pList |> not then pieces <- Knight :: pieces
-        if List.contains (Bishop, 2) pList |> not then pieces <- Bishop :: pieces
-        if List.contains (Bishop, 1) pList |> not then pieces <- Bishop :: pieces
-        if List.contains (Rook, 2) pList |> not then pieces <- Rook :: pieces
-        if List.contains (Rook, 1) pList |> not then pieces <- Rook :: pieces
+        for p in [ Queen; Marshal; Cardinal ] do
+            if List.contains (p, 1) pList |> not then pieces <- p :: pieces
+        for p in [ Knight; Bishop; Rook ] do
+            if List.contains (p, 2) pList |> not then 
+                if List.contains (p, 1) pList then pieces <- p :: pieces
+                else pieces <- p :: p :: pieces
         pieces
-    
-    let wp = 
-        board
-        |> Map.toList
-        |> List.choose (fun (_, f) -> 
-               match f with
-               | Piece(p, White) when p <> Pawn -> Some p
-               | _ -> None)
-        |> List.countBy id
-    
-    let bp = 
-        board
-        |> Map.toList
-        |> List.choose (fun (_, f) -> 
-               match f with
-               | Piece(p, Black) when p <> Pawn -> Some p
-               | _ -> None)
-        |> List.countBy id
-    
     { Board = board
       EnPassant = 
           if e.[2] = "-" then 
@@ -281,6 +268,6 @@ let ofFen (fen : string) =
           else Black
       KingWhite = Map.findKey (fun sq p -> p = Piece(King, White)) board
       KingBlack = Map.findKey (fun sq p -> p = Piece(King, Black)) board
-      CappedWhite = capped wp
-      CappedBlack = capped bp
+      CappedWhite = capped White
+      CappedBlack = capped Black
       ReversibleCount = int e.[3] }
